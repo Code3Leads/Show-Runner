@@ -76,7 +76,7 @@ Call → Hang up → Watch the system respond instantly
 
 </section>
 
-<!-- EXAMPLE FLOW -->
+<!-- EXAMPLE -->
 <section>
 
 <h2>Example Interaction</h2>
@@ -112,26 +112,28 @@ This system ensures every call becomes an opportunity instead of lost revenue.
 
 </section>
 
-<!-- CALCULATOR -->
-<section class="calculator-section">
+<!-- 🔥 PROMO TILE -->
+<section>
 
-<h2>Missed Call Revenue Calculator</h2>
+<div class="card" style="border:2px solid #e11d48; max-width:500px; margin:auto;">
 
-<p>
-See how much revenue missed calls could be costing your business.
+<h2>🚨 Launch Offer</h2>
+
+<p style="font-size:20px;">
+Sign up before <strong>May 31st</strong>
 </p>
 
-<div class="calculator-box">
+<p style="font-size:22px; margin:10px 0;">
+<del>$199 Setup Fee</del>
+</p>
 
-<label>Missed calls per week</label>
-<input id="missedCalls" type="number" placeholder="e.g. 5">
+<p style="font-size:26px; font-weight:bold; color:#22c55e;">
+$0 Setup
+</p>
 
-<label>Average job value ($)</label>
-<input id="jobValue" type="number" placeholder="e.g. 500">
-
-<button onclick="calculateLoss()">Calculate Lost Revenue</button>
-
-<h3 id="result"></h3>
+<p style="opacity:0.7;">
+Limited time offer for early businesses
+</p>
 
 </div>
 
@@ -142,9 +144,10 @@ See how much revenue missed calls could be costing your business.
 
 <h2>Simple Pricing</h2>
 
-<div class="card">
+<div class="grid">
 
-<p><strong>Basic Plan</strong></p>
+<div class="card">
+<h3>Basic</h3>
 
 <p style="font-size:28px; font-weight:bold;">$79 / month</p>
 
@@ -154,7 +157,25 @@ See how much revenue missed calls could be costing your business.
 ✔ Instant lead notification
 </p>
 
-<p><strong>$199 one-time setup fee</strong></p>
+<p><strong>$199 setup</strong></p>
+
+</div>
+
+<div class="card" style="border:2px solid #e11d48;">
+<h3>Pro</h3>
+
+<p style="font-size:28px; font-weight:bold;">$129 / month</p>
+
+<p>
+✔ Everything in Basic<br>
+✔ Custom response flows<br>
+✔ Priority support<br>
+✔ Lead optimization
+</p>
+
+<p><strong>$199 setup</strong></p>
+
+</div>
 
 </div>
 
@@ -166,7 +187,7 @@ See how much revenue missed calls could be costing your business.
 <h2>Want This Set Up For Your Business?</h2>
 
 <p>
-We can install this system and have it running quickly for your business.
+We can install this system and have it running quickly.
 </p>
 
 <a href="https://calendly.com/code3leads/30min" target="_blank" class="button">
@@ -186,6 +207,7 @@ Set This Up For My Business
 <p>© 2026 Code 3 Leads. All Rights Reserved.</p>
 
 <p>🇺🇸 Veteran Owned & Operated</p>
+
 <p>Baltimore County, Maryland</p>
 
 </footer>
@@ -194,11 +216,6 @@ Set This Up For My Business
 function calculateLoss() {
   let calls = document.getElementById("missedCalls").value;
   let value = document.getElementById("jobValue").value;
-
-  if(calls === "" || value === "") {
-    document.getElementById("result").innerText = "Enter values above";
-    return;
-  }
 
   let yearlyLoss = calls * value * 52;
 
