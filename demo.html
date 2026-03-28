@@ -165,8 +165,8 @@
       📞 (410) 555-1234<br><br>
       <span id="leadText"></span>
 
-<a href="tel:14105551234" class="call-btn">📞 Call Customer</a>
-<a href="sms:14105551234" class="call-btn">💬 Text Customer</a>
+<a href="tel:14105551234" class="call-btn">📞 Call Now</a>
+<a href="sms:14105551234" class="call-btn">💬 Text Now</a>
     </div>
   </div>
 
@@ -175,6 +175,7 @@
 <script>
 let step = 0;
 let selectedText = "";
+let priority = "";
 
 window.onload = () => {
   bot("📞 Incoming Call...");
@@ -185,6 +186,13 @@ window.onload = () => {
     bot("Hey! Sorry we missed your call.\n\nWhat can we help you with?");
   }, 2000);
 };
+
+function getTime(){
+  let now = new Date();
+  let hrs = now.getHours();
+  let mins = now.getMinutes().toString().padStart(2, '0');
+  return hrs + ":" + mins;
+}
 
 function bot(text){
   let m = document.createElement("div");
@@ -206,10 +214,15 @@ function choose(option){
 
   if(option == 1){
     selectedText = "Emergency Service";
-  } else if(option == 2){
+    priority = "🔥 HIGH PRIORITY";
+  } 
+  else if(option == 2){
     selectedText = "Service Issue";
-  } else {
+    priority = "⚠️ Normal Priority";
+  } 
+  else {
     selectedText = "Quote Request";
+    priority = "📋 Estimate Request";
   }
 
   user(selectedText);
@@ -237,16 +250,26 @@ function send(){
 
   if(step === 1){
 
-    bot("Got it — sending to contractor now...");
+    bot("⏳ Sending to contractor...");
 
     setTimeout(() => {
 
       document.getElementById("leadBox").style.display = "block";
 
-      document.getElementById("leadText").innerText =
-        selectedText + ": " + val;
+      document.getElementById("leadText").innerHTML =
+        "<strong>" + selectedText + "</strong><br>" +
+        val + "<br><br>" +
+        "<small>" + priority + "</small><br>" +
+        "<small>Received at " + getTime() + "</small>";
 
       bot("✅ Contractor notified. They will contact you shortly.");
+
+      // highlight animation
+      let box = document.getElementById("leadBox");
+      box.style.boxShadow = "0 0 15px #22c55e";
+      setTimeout(() => {
+        box.style.boxShadow = "none";
+      }, 1500);
 
     }, 800);
   }
