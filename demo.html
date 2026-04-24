@@ -264,6 +264,27 @@ function send(){
 
       bot("✅ Contractor notified. They will contact you shortly.");
 
+// 🔥 REAL BACKEND TRIGGER
+fetch("https://show-runner-backend.onrender.com/simulate-call", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "x-api-key": "7f2a8e27-6af9-4844-932e-942c520df77a"
+  },
+  body: JSON.stringify({
+    name: "John Smith",
+    number: "+14105551234",
+    service: selectedText
+  })
+})
+.then(res => res.json())
+.then(data => {
+  console.log("Backend response:", data);
+})
+.catch(err => {
+  console.error("Error triggering backend:", err);
+});
+
       // highlight animation
       let box = document.getElementById("leadBox");
       box.style.boxShadow = "0 0 15px #22c55e";
