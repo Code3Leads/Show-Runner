@@ -1,35 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Show Runner Demo</title>
+  <title>Missed Call Demo | Code 3 Leads</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #020617;
-      color: white;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0f172a;
       text-align: center;
       padding: 30px 15px;
+      color: white;
     }
-
-    h1 { margin-bottom: 5px; }
-    p { color: #cbd5f5; }
 
     .container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 30px;
-      margin-top: 20px;
+      gap: 20px;
     }
 
     .phone {
-      max-width: 320px;
+      max-width: 350px;
       background: black;
       border-radius: 40px;
-      padding: 10px;
+      padding: 12px;
     }
 
     .screen {
@@ -93,6 +89,7 @@
       background: #1f2937;
     }
 
+    /* NEW CLEAN PHONE INPUT */
     .phone-input {
       padding: 10px;
       background: #fff;
@@ -106,21 +103,6 @@
       border: 1px solid #ccc;
     }
 
-    .panel {
-      max-width: 320px;
-      background: #020617;
-      border-radius: 20px;
-      padding: 20px;
-      text-align: left;
-    }
-
-    .lead {
-      background: #1f2937;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 10px;
-      display: none;
-    }
   </style>
 </head>
 
@@ -134,9 +116,9 @@
   <div class="phone">
     <div class="screen">
 
-      <!-- 🔥 PHONE INPUT MOVED INSIDE -->
+      <!-- CLEAN PHONE INPUT -->
       <div class="phone-input">
-        <input id="userPhone" placeholder="Enter your phone for demo">
+        <input id="userPhone" placeholder="Enter your phone number">
       </div>
 
       <div class="header">Customer</div>
@@ -152,15 +134,8 @@
           <button onclick="choose(2)">2. Service Issue</button>
           <button onclick="choose(3)">3. Quote</button>
         </div>
+
       </div>
-
-    </div>
-  </div>
-
-  <div class="panel">
-    <h3>📲 New Lead Notification</h3>
-    <div class="lead" id="leadBox">
-      <span id="leadText"></span>
     </div>
   </div>
 
@@ -170,7 +145,6 @@
 
 let step = 0;
 let selectedText = "";
-let priority = "";
 
 window.onload = () => {
   bot("📞 Incoming Call...");
@@ -200,20 +174,19 @@ function choose(option){
 
   if(option == 1){
     selectedText = "Emergency Service";
-    priority = "🔥 HIGH PRIORITY";
-  } else if(option == 2){
+  } 
+  else if(option == 2){
     selectedText = "Service Issue";
-    priority = "⚠️ Normal Priority";
-  } else {
+  } 
+  else {
     selectedText = "Quote Request";
-    priority = "📋 Estimate Request";
   }
 
   user(selectedText);
   document.getElementById("options").style.display = "none";
 
   setTimeout(() => {
-    bot("Tell us more details...");
+    bot("Tell us more...");
     step = 1;
   }, 400);
 }
@@ -222,7 +195,7 @@ function send(){
   let val = input.value.trim();
   if(!val) return;
 
-  // 🔥 Allow typing 1/2/3
+  // FIX: typing 1 works
   if(step === 0){
     if(val === "1" || val === "2" || val === "3"){
       choose(parseInt(val));
@@ -245,28 +218,31 @@ function send(){
 
     bot("⏳ Sending to contractor...");
 
-    setTimeout(() => {
+    // DEBUG LOG
+    console.log("Sending to backend:", phoneInput);
 
-      document.getElementById("leadBox").style.display = "block";
-      document.getElementById("leadText").innerHTML =
-        selectedText + "<br>" + val;
-
+    fetch("https://show-runner-backend.onrender.com/simulate-call", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": "YOUR_REAL_API_KEY"
+      },
+      body: JSON.stringify({
+        name: "Demo User",
+        number: phoneInput,
+        service: selectedText
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log("Backend response:", data);
       bot("✅ Contractor notified.");
+    })
+    .catch(err => {
+      console.error("ERROR:", err);
+      bot("❌ Failed to send");
+    });
 
-      fetch("https://show-runner-backend.onrender.com/simulate-call", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": "7f2a8e27-6af9-4844-932e-942c520df77a"
-        },
-        body: JSON.stringify({
-          name: "Demo User",
-          number: phoneInput,
-          service: selectedText
-        })
-      });
-
-    }, 800);
   }
 }
 
