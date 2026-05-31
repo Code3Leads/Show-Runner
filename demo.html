@@ -1,37 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Missed Call Demo | Code 3 Leads</title>
+  <title>Show Runner Demo | Code 3 Leads</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     body {
       margin: 0;
+      padding: 30px 15px;
       font-family: -apple-system, BlinkMacSystemFont, sans-serif;
       background: #0f172a;
-      text-align: center;
-      padding: 30px 15px;
       color: white;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 5px;
     }
 
     .container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 20px;
+      gap: 30px;
+      margin-top: 20px;
     }
 
     .phone {
-      max-width: 350px;
+      width: 340px;
       background: black;
       border-radius: 40px;
       padding: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,.4);
     }
 
     .screen {
       background: #f1f5f9;
       border-radius: 30px;
-      height: 520px;
+      height: 550px;
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -40,33 +46,43 @@
     .header {
       background: white;
       color: black;
-      padding: 10px;
+      padding: 12px;
       font-weight: bold;
       border-bottom: 1px solid #ddd;
     }
 
     .messages {
       flex: 1;
-      padding: 10px;
       overflow-y: auto;
+      padding: 12px;
     }
 
     .bubble {
       padding: 10px;
       border-radius: 15px;
-      margin: 5px 0;
+      margin: 6px 0;
       max-width: 75%;
+      text-align: left;
+      white-space: pre-wrap;
     }
 
-    .bot { background: #e5e7eb; color: black; }
-    .user { background: #2563eb; color: white; margin-left: auto; }
+    .bot {
+      background: #e5e7eb;
+      color: black;
+    }
+
+    .user {
+      background: #2563eb;
+      color: white;
+      margin-left: auto;
+    }
 
     .input-area {
       background: white;
       padding: 10px;
     }
 
-    input {
+    .input-area input {
       width: 65%;
       padding: 8px;
       border-radius: 10px;
@@ -77,9 +93,9 @@
       padding: 8px 12px;
       border-radius: 10px;
       border: none;
+      cursor: pointer;
       background: #e11d48;
       color: white;
-      cursor: pointer;
     }
 
     .options button {
@@ -88,21 +104,6 @@
       margin-top: 5px;
       background: #1f2937;
     }
-
-    /* NEW CLEAN PHONE INPUT */
-    .phone-input {
-      padding: 10px;
-      background: #fff;
-      border-bottom: 1px solid #ddd;
-    }
-
-    .phone-input input {
-      width: 100%;
-      padding: 8px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-
   </style>
 </head>
 
@@ -113,21 +114,24 @@
 
 <div class="container">
 
+  <!-- CUSTOMER PHONE -->
+
   <div class="phone">
     <div class="screen">
 
-      <!-- CLEAN PHONE INPUT -->
-      <div class="phone-input">
-        <input id="userPhone" placeholder="Enter your phone number">
+      <div class="header">
+        Customer
       </div>
-
-      <div class="header">Customer</div>
 
       <div class="messages" id="chat"></div>
 
       <div class="input-area">
-        <input id="input" placeholder="Type message...">
-        <button onclick="send()">Send</button>
+
+        <input id="input" placeholder="Describe your issue...">
+
+        <button onclick="send()">
+          Send
+        </button>
 
         <div class="options" id="options">
           <button onclick="choose(1)">1. Emergency</button>
@@ -136,6 +140,21 @@
         </div>
 
       </div>
+
+    </div>
+  </div>
+
+  <!-- CONTRACTOR PHONE -->
+
+  <div class="phone">
+    <div class="screen">
+
+      <div class="header">
+        Contractor
+      </div>
+
+      <div class="messages" id="contractorChat"></div>
+
     </div>
   </div>
 
@@ -147,103 +166,139 @@ let step = 0;
 let selectedText = "";
 
 window.onload = () => {
+
   bot("📞 Incoming Call...");
-  setTimeout(() => bot("❌ Missed Call"), 1000);
+
   setTimeout(() => {
-    bot("Hey! Sorry we missed your call.\n\nWhat can we help you with?");
+    bot("❌ Missed Call");
+  }, 1000);
+
+  setTimeout(() => {
+    bot(
+      "Hey! Sorry we missed your call.\n\nWhat can we help you with?"
+    );
   }, 2000);
+
 };
 
 function bot(text){
+
   let m = document.createElement("div");
+
   m.className = "bubble bot";
+
   m.innerText = text;
+
   chat.appendChild(m);
+
   chat.scrollTop = chat.scrollHeight;
 }
 
 function user(text){
+
   let m = document.createElement("div");
+
   m.className = "bubble user";
+
   m.innerText = text;
+
   chat.appendChild(m);
+
   chat.scrollTop = chat.scrollHeight;
+}
+
+function contractor(text){
+
+  let m = document.createElement("div");
+
+  m.className = "bubble bot";
+
+  m.innerText = text;
+
+  contractorChat.appendChild(m);
+
+  contractorChat.scrollTop =
+    contractorChat.scrollHeight;
 }
 
 function choose(option){
 
-  if(option == 1){
+  if(option === 1){
     selectedText = "Emergency Service";
-  } 
-  else if(option == 2){
+  }
+  else if(option === 2){
     selectedText = "Service Issue";
-  } 
-  else {
+  }
+  else{
     selectedText = "Quote Request";
   }
 
   user(selectedText);
-  document.getElementById("options").style.display = "none";
+
+  document.getElementById("options").style.display =
+    "none";
 
   setTimeout(() => {
-    bot("Tell us more...");
+
+    bot(
+      "Please briefly describe the issue and include the address."
+    );
+
     step = 1;
-  }, 400);
+
+  }, 500);
 }
 
 function send(){
-  let val = input.value.trim();
+
+  let val =
+    document.getElementById("input").value.trim();
+
   if(!val) return;
 
-  // FIX: typing 1 works
   if(step === 0){
+
     if(val === "1" || val === "2" || val === "3"){
+
       choose(parseInt(val));
-      input.value = "";
+
+      document.getElementById("input").value = "";
+
       return;
     }
   }
 
   user(val);
-  input.value = "";
+
+  document.getElementById("input").value = "";
 
   if(step === 1){
 
-    let phoneInput = document.getElementById("userPhone").value;
-
-    if (!phoneInput || phoneInput.length < 10) {
-      alert("Enter a valid phone number first");
-      return;
-    }
+    let phoneInput = "(443) 555-1234";
 
     bot("⏳ Sending to contractor...");
 
-    // DEBUG LOG
-    console.log("Sending to backend:", phoneInput);
+    setTimeout(() => {
 
-    fetch("https://show-runner-backend.onrender.com/simulate-call", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": "7f2a8e27-6af9-4844-932e-942c520df77a"
-      },
-      body: JSON.stringify({
-        name: "Demo User",
-        number: phoneInput,
-        service: selectedText
-      })
-    })
-    .then(res => res.json())
-    .then(data => {
-      console.log("Backend response:", data);
-      bot("✅ Contractor notified.");
-    })
-    .catch(err => {
-      console.error("ERROR:", err);
-      bot("❌ Failed to send");
-    });
+      contractor(
+`🚨 NEW CUSTOMER REQUEST
+
+Phone:
+${phoneInput}
+
+Service:
+${selectedText}
+
+Issue:
+${val}`
+      );
+
+      bot("✅ Request submitted successfully.");
+
+    }, 1200);
 
   }
+
 }
 
 </script>
