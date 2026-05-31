@@ -104,6 +104,43 @@
       margin-top: 5px;
       background: #1f2937;
     }
+
+  .lead-animation{
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #22c55e;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 12px;
+  font-weight: bold;
+  opacity: 0;
+  z-index: 999;
+  pointer-events: none;
+}
+
+.fly{
+  animation: flyLead 1.2s ease forwards;
+}
+
+@keyframes flyLead {
+
+  0%{
+    opacity:1;
+    transform:
+      translate(-50%, -50%)
+      translateX(-250px);
+  }
+
+  100%{
+    opacity:0;
+    transform:
+      translate(-50%, -50%)
+      translateX(250px);
+  }
+
+}
   </style>
 </head>
 
@@ -111,6 +148,10 @@
 
 <h1>Live Demo</h1>
 <p>See both sides of the system in action</p>
+
+<div id="leadAnimation" class="lead-animation">
+  📨 Lead Sent
+</div>
 
 <div class="container">
 
@@ -277,6 +318,15 @@ function send(){
     let phoneInput = "(443) 555-1234";
 
     bot("⏳ Sending to contractor...");
+
+    let flyer =
+  document.getElementById("leadAnimation");
+
+flyer.classList.remove("fly");
+
+void flyer.offsetWidth;
+
+flyer.classList.add("fly");
 
     setTimeout(() => {
 
