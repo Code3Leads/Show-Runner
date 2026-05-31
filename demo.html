@@ -357,7 +357,24 @@ flyer.classList.add("fly");
 
     setTimeout(() => {
 
-      contractor(
+  contractor(
+`📋 Lead Delivered
+
+Phone:
+${phoneInput}
+
+Service:
+${selectedText}
+
+Issue:
+${val}`
+  );
+
+  bot("✅ Request submitted successfully.");
+
+  setTimeout(() => {
+
+    contractor(
 `🚨 NEW CUSTOMER REQUEST
 
 Phone:
@@ -368,15 +385,11 @@ ${selectedText}
 
 Issue:
 ${val}`
-      );
+    );
 
-      bot("✅ Request submitted successfully.");
+  }, 1200);
 
-    }, 1200);
-
-  }
-
-}
+}, 3500);
 
 </script>
 
