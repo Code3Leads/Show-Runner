@@ -292,15 +292,50 @@ Request Demo
 </footer>
 
 <script>
-function calculateLoss() {
-  let calls = document.getElementById("missedCalls").value;
-  let value = document.getElementById("jobValue").value;
 
-  let yearlyLoss = calls * value * 52;
+document.getElementById("leadForm")
+.addEventListener("submit", async function(e){
 
-  document.getElementById("result").innerText =
-    "You're losing approximately $" + yearlyLoss.toLocaleString() + " per year";
-}
+    e.preventDefault();
+
+    const data = {
+        name: document.getElementById("name").value,
+        business: document.getElementById("business").value,
+        phone: document.getElementById("phone").value,
+        service: document.getElementById("service").value,
+        message: document.getElementById("message").value
+    };
+
+    console.log(data);
+
+    try {
+
+        const response = await fetch(
+            "http://10.0.0.69:5000/lead",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            }
+        );
+
+        document.getElementById("successMessage").innerText =
+            "Request submitted successfully.";
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        document.getElementById("successMessage").innerText =
+            "Submission failed.";
+
+    }
+
+});
+
 </script>
 
 </body>
