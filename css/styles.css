@@ -270,15 +270,15 @@ footer a:hover {
   }
 
   25% {
-    transform: scale(1.03);
+    transform: scale(1.08);
   }
 
   50% {
-    transform: scale(.98);
+    transform: scale(.93);
   }
 
   75% {
-    transform: scale(1.02);
+    transform: scale(1.05);
   }
 
   100% {
