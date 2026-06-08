@@ -115,7 +115,7 @@
   padding: 20px 35px;
   border-radius: 12px;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 60px;
   opacity: 0;
   z-index: 999;
   pointer-events: none;
@@ -177,7 +177,7 @@
 <p>See both sides of the system in action</p>
 
 <div id="leadAnimation" class="lead-animation">
-  🚁 Delivering Lead
+  🚁
 </div>
 
 <div class="container">
@@ -371,23 +371,6 @@ ${val}`
   );
 
   bot("✅ Request submitted successfully.");
-
-  setTimeout(() => {
-
-    contractor(
-`🚨 NEW CUSTOMER REQUEST
-
-Phone:
-${phoneInput}
-
-Service:
-${selectedText}
-
-Issue:
-${val}`
-    );
-
-  }, 1200);
 
 }, 3500);
   }
