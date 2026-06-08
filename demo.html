@@ -355,7 +355,19 @@ void flyer.offsetWidth;
 
 flyer.classList.add("fly");
 
-    setTimeout(() => {
+  setTimeout(() => {
+
+  document
+    .querySelectorAll(".phone")[1]
+    .classList.add("phone-alert");
+
+  setTimeout(() => {
+
+    document
+      .querySelectorAll(".phone")[1]
+      .classList.remove("phone-alert");
+
+  }, 700);
 
   contractor(
 `📋 Lead Delivered
@@ -373,8 +385,6 @@ ${val}`
   bot("✅ Request submitted successfully.");
 
 }, 3500);
-  }
-}
 
 </script>
 
