@@ -260,29 +260,34 @@ footer a:hover {
 }
 
 .phone-alert {
-  animation: phoneAlert .7s ease;
+  animation: phoneAlert .5s ease;
+  box-shadow: 0 0 20px #e11d48;
 }
 
 @keyframes phoneAlert {
 
   0% {
-    transform: scale(1);
+    transform: translateX(0);
   }
 
-  25% {
-    transform: scale(1.08);
+  20% {
+    transform: translateX(-8px);
   }
 
-  50% {
-    transform: scale(.93);
+  40% {
+    transform: translateX(8px);
   }
 
-  75% {
-    transform: scale(1.05);
+  60% {
+    transform: translateX(-8px);
+  }
+
+  80% {
+    transform: translateX(8px);
   }
 
   100% {
-    transform: scale(1);
+    transform: translateX(0);
   }
 
 }
